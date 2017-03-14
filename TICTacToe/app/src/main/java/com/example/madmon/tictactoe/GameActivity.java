@@ -5,15 +5,15 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-public class Main2Activity extends AppCompatActivity implements View.OnClickListener {
+public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static int GAME_DIM = 3;
 
     TTTButton[][] buttons; //[num-of-row][num-of-col]
 
@@ -22,28 +22,28 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
+        setContentView(R.layout.activity_game);
 
         isXNow = true;
 
         GridLayout gl = (GridLayout) findViewById(R.id.gridLayout);
 
         android.widget.AbsListView.LayoutParams params = getParamsForScreenSize();
-        gl.setColumnCount(GAME_DIM);
+        gl.setColumnCount(GameSettings.gameDim);
 
         TTTButton.setButtonsSizes(this , getButtonOptimalSize());
 //
-        buttons = new TTTButton[GAME_DIM][GAME_DIM];
+        buttons = new TTTButton[GameSettings.gameDim][GameSettings.gameDim];
 
-        for(int i = 0 ; i < GAME_DIM ; i++) {
-            for(int j = 0 ; j < GAME_DIM ; j++) {
-                if(Math.random() < 0.5)
-                   buttons[i][j] = new TTTButton(this);
+        for(int i = 0; i < GameSettings.gameDim; i++) {
+            for(int j = 0; j < GameSettings.gameDim; j++) {
+                if(Math.random() < (double)GameSettings.persistantTileAppearancePercentage / 100)
+                   buttons[i][j] = new TTTButtonEndless(this);
                 else
-                    buttons[i][j] = new TTTButtonEndless(this);
+                    buttons[i][j] = new TTTButton(this);
 
                 buttons[i][j].setOnClickListener(this);
-//                buttons[i][j].setWidthHeight(gl.getWidth()/GAME_DIM , gl.getHeight()/GAME_DIM);
+//                buttons[i][j].setWidthHeight(gl.getWidth()/gameDim , gl.getHeight()/gameDim);
                 gl.addView(buttons[i][j] , params);
             }
         }
@@ -71,7 +71,7 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
 
     public void checkGameEnd() {
         //check rows
-        for(int i = 0 ; i < GAME_DIM ; i++) {
+        for(int i = 0; i < GameSettings.gameDim; i++) {
             TTTButton[] row = buttons[i];
             if(isArrayWinning(row)) {
                 finishGame();
@@ -81,10 +81,10 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
 
         //check columns
-        for(int j = 0 ; j < GAME_DIM ; j++) {
-            TTTButton[] col = new TTTButton[GAME_DIM];
+        for(int j = 0; j < GameSettings.gameDim; j++) {
+            TTTButton[] col = new TTTButton[GameSettings.gameDim];
 
-            for(int i = 0 ; i < GAME_DIM ; i++) {
+            for(int i = 0; i < GameSettings.gameDim; i++) {
                 col[i] = buttons[i][j];
             }
 
@@ -95,8 +95,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
 
         //check diagonal 1
-        TTTButton[] diag = new TTTButton[GAME_DIM];
-        for(int i = 0 ; i < GAME_DIM ; i++) {
+        TTTButton[] diag = new TTTButton[GameSettings.gameDim];
+        for(int i = 0; i < GameSettings.gameDim; i++) {
             diag[i] = buttons[i][i];
         }
         if(isArrayWinning(diag)) {
@@ -104,9 +104,9 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         }
 
         //check diagonal 2
-        TTTButton[] diag2 = new TTTButton[GAME_DIM];
-        for(int i = 0 ; i < GAME_DIM ; i++) {
-            diag2[i] = buttons[i][GAME_DIM-i-1];
+        TTTButton[] diag2 = new TTTButton[GameSettings.gameDim];
+        for(int i = 0; i < GameSettings.gameDim; i++) {
+            diag2[i] = buttons[i][GameSettings.gameDim -i-1];
         }
         if(isArrayWinning(diag2)) {
             finishGame();
@@ -171,8 +171,8 @@ public class Main2Activity extends AppCompatActivity implements View.OnClickList
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_main2);
 
         //take into account the activity's layout padding
-        int buttonMaxWidth = (size.x - rl.getPaddingLeft() - rl.getPaddingRight()) / GAME_DIM;
-        int buttonMaxHeight = (size.y - rl.getPaddingTop() - rl.getPaddingBottom()) / GAME_DIM;
+        int buttonMaxWidth = (size.x - rl.getPaddingLeft() - rl.getPaddingRight()) / GameSettings.gameDim;
+        int buttonMaxHeight = (size.y - rl.getPaddingTop() - rl.getPaddingBottom()) / GameSettings.gameDim;
 
         return Math.min(buttonMaxWidth, buttonMaxHeight);
     }
