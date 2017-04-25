@@ -20,7 +20,10 @@ public class MainMenuActivity extends AppCompatActivity {
             case R.id.settingsB:
                 startActivity(new Intent(this , SettingsActivity.class));
                 break;
-            case R.id.startB:
+            case R.id.startSingle:
+                startActivity(new Intent(this , SinglePlayerActivity.class));
+                break;
+            case R.id.startMulti:
                 startActivity(new Intent(this , GameActivity.class));
                 break;
             default:

@@ -15,9 +15,10 @@ import android.widget.Toast;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
 
-    TTTButton[][] buttons; //[num-of-row][num-of-col]
+    protected TTTButton[][] buttons; //[num-of-row][num-of-col]
+    GridLayout gl;
 
-    boolean isXNow;
+    protected boolean isXNow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         isXNow = true;
 
-        GridLayout gl = (GridLayout) findViewById(R.id.gridLayout);
+        gl = (GridLayout) findViewById(R.id.gridLayout);
 
         android.widget.AbsListView.LayoutParams params = getParamsForScreenSize();
         gl.setColumnCount(GameSettings.gameDim);
@@ -52,10 +53,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
 
-        setButtonState((TTTButton)view);
+        doTurn((TTTButton)view);
+
+    }
+    public void doTurn(TTTButton choice) {
+        setButtonState(choice);
         checkGameEnd();
 
-        isXNow = !isXNow;
+        isXNow = !isXNow;   //player-turn indicator
     }
 
     public void setButtonState(TTTButton b) {

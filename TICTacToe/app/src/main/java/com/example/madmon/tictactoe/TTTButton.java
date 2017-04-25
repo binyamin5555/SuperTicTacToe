@@ -12,6 +12,7 @@ import android.widget.Button;
 
 public class TTTButton extends Button {
     public static int textSize = 50;
+    public int numOfClicks;
 
 
     private boolean isMarked;
@@ -20,12 +21,16 @@ public class TTTButton extends Button {
     public TTTButton(Context context) {
         super(context);
 
-//        this.setMaxWidth(size);
-//        this.setMaxHeight(size);
+        numOfClicks = 1;
+        this.setTextSize(TypedValue.COMPLEX_UNIT_DIP , textSize);
 
-//        this.setMinimumWidth(size);
-//        this.setMinimumHeight(size);
+        isMarked = false;
+    }
 
+    public TTTButton(Context context , int numOfClicks) {
+        super(context);
+
+        this.numOfClicks = numOfClicks;
         this.setTextSize(TypedValue.COMPLEX_UNIT_DIP , textSize);
 
         isMarked = false;
