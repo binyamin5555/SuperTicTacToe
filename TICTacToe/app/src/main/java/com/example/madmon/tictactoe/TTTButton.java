@@ -11,6 +11,9 @@ import android.widget.Button;
  */
 
 public class TTTButton extends Button {
+
+    public int rowIndex , colIndex;
+
     public static int textSize = 50;
     public int numOfClicks;
 
@@ -18,18 +21,39 @@ public class TTTButton extends Button {
     private boolean isMarked;
     private static int size;
 
-    public TTTButton(Context context) {
+    private Context givenContext;
+
+    public TTTButton(Context context , int colIndex , int rowIndex) {
         super(context);
+        this.givenContext = context;
 
-        numOfClicks = 1;
-        this.setTextSize(TypedValue.COMPLEX_UNIT_DIP , textSize);
-
-        isMarked = false;
+        doCtorStuff(1 , rowIndex , colIndex);
     }
 
-    public TTTButton(Context context , int numOfClicks) {
+    public TTTButton(Context context , int numOfClicks , int rowIndex , int colIndex) {
         super(context);
 
+        doCtorStuff(numOfClicks , rowIndex , colIndex);
+
+    }
+
+    //copy constructor
+    public TTTButton(TTTButton b){
+        super(b.givenContext);
+
+        copyFromOther(b);
+    }
+
+    public void copyFromOther(TTTButton b) {
+        this.givenContext = b.givenContext;
+        doCtorStuff(b.numOfClicks , b.rowIndex , b.colIndex);
+        this.setText(b.getText());
+        this.setBackgroundColor(b.getDrawingCacheBackgroundColor());
+    }
+
+    private void doCtorStuff(int numOfClicks , int rowIndex , int colIndex) {
+        this.rowIndex = rowIndex;
+        this.colIndex = colIndex;
         this.numOfClicks = numOfClicks;
         this.setTextSize(TypedValue.COMPLEX_UNIT_DIP , textSize);
 
@@ -43,6 +67,8 @@ public class TTTButton extends Button {
 
     public void pressButton(String str , int color) {
         isMarked = true;
+
+        numOfClicks--;
 
         this.setText(str);
         this.setBackgroundColor(color);

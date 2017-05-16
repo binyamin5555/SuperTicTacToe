@@ -12,23 +12,65 @@
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_end_game" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="103dp"
+            android:layout_weight="0.52"
+            android:fontFamily="casual"
+            android:gravity="center"
+            android:text="game over"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="50sp"
+            android:textStyle="bold|italic" />
+
+        <Button
+            android:id="@+id/b_NewGame"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_weight="0.05"
+            android:onClick="GoActivity"
+            android:text="new game"
+            android:textSize="30sp"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/b_GameMenu"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_weight="0.05"
+            android:onClick="GoActivity"
+            android:text="Game menu"
+            android:textSize="30sp"
+            android:textStyle="italic" />
+
+        <Button
+            android:id="@+id/b_Exit"
+            android:layout_width="match_parent"
+            android:layout_height="67dp"
+            android:layout_weight="0.05"
+            android:onClick="GoActivity"
+            android:text="exit"
+            android:textSize="30sp"
+            android:textStyle="italic" />
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

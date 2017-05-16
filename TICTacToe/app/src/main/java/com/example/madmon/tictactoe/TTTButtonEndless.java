@@ -7,8 +7,8 @@ import android.content.Context;
  */
 
 public class TTTButtonEndless extends TTTButton {
-    public TTTButtonEndless(Context context) {
-        super(context);
+    public TTTButtonEndless(Context context , int rowIndex , int colIndex) {
+        super(context , rowIndex , colIndex);
 
 //        setBackgroundResource(R.drawable.inf);
     }
@@ -16,6 +16,8 @@ public class TTTButtonEndless extends TTTButton {
     @Override
     public void pressButton(String str, int color) {
         super.pressButton(str, color);
+
+        numOfClicks = -1;
 
         setEnabled(true);
     }
