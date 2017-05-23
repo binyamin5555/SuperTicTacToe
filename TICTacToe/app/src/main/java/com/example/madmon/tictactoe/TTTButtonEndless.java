@@ -18,7 +18,7 @@ public class TTTButtonEndless extends TTTButton {
     public void pressButton(String str, Drawable color) {
         super.pressButton(str, color);
 
-        numOfClicks = -1;
+            numOfClicks = -1;
 
 //        setEnabled(true);
     }

@@ -19,6 +19,7 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
 
     public static int textSize = 50;
     public int numOfClicks;
+    protected String ownString;
 
 
     private boolean isMarked;
@@ -51,15 +52,16 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
         this.givenContext = b.givenContext;
         doCtorStuff(b.numOfClicks , b.rowIndex , b.colIndex);
         this.setText(b.getText());
+        this.ownString = b.ownString;
+        this.setEnabled(b.isEnabled());
+        this.isMarked = b.isMarked;
 
         Drawable buttonBackground = b.getBackground();
         this.setBackground(buttonBackground);
-//        ColorDrawable buttonColor = (ColorDrawable) b.getBackground();
-//        int colorId = buttonColor.getColor();
-//        this.setBackgroundColor(colorId);
     }
 
     private void doCtorStuff(int numOfClicks , int rowIndex , int colIndex) {
+        ownString = "";
         this.rowIndex = rowIndex;
         this.colIndex = colIndex;
         this.numOfClicks = numOfClicks;
@@ -82,9 +84,11 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
         numOfClicks--;
 
         this.setText(str);
+        this.ownString = str;
         this.setBackground(color);
 
-        this.setEnabled(false);
+        if(numOfClicks == 0)
+           this.setEnabled(false);
     }
 
     public boolean isMarked() {return isMarked;}
@@ -95,10 +99,25 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
 
     }
 
+    public String getOwnString() {
+        return ownString;
+    }
 
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int smallest = Math.min(widthMeasureSpec , heightMeasureSpec);
         super.onMeasure(smallest , smallest); // This is the key that will make the height equivalent to its width
+    }
+
+    @Override
+    public String toString() {
+        return "TTTButton{" +
+                "rowIndex=" + rowIndex +
+                ", colIndex=" + colIndex +
+                ", numOfClicks=" + numOfClicks +
+                ", ownString='" + ownString + '\'' +
+                ", isMarked=" + isMarked +
+                ", givenContext=" + givenContext +
+                '}';
     }
 }

@@ -26,6 +26,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,11 +80,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 }
 
     public void setButtonState(TTTButton b) {
-
-        StringAndColor sac = getSignForTurn(isXNow);
-
-        b.pressButton(sac.str, sac.color);
-
+        setButtonState(b ,isXNow);
     }
     public void setButtonState(TTTButton b , boolean forcedTurn) {
 
@@ -93,14 +90,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public boolean isGameEnd() {
+        Log.i("gameActivity" , "checking game end for turn " + (isXNow? "X": "O"));
         //check rows
         for (int i = 0; i < GameSettings.gameDim; i++) {
             TTTButton[] row = buttons[i];
             if (isArrayWinning(row)) {
                 return true;
             }
-
-
         }
 
         //check columns
@@ -142,17 +138,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public boolean isArrayWinning(TTTButton[] array) {
         String s = "";
         if (array[0].isMarked()) {
-            s = array[0].getText().toString();
+            s = array[0].getOwnString();
         } else {
             return false;
         }
 
         for (int j = 0; j < array.length; j++) {
-            if (array[j].isMarked()) {
-                if (!(array[j].getText().toString().equals(s))) {
-                    return false;
-                }
-            } else {
+            if (!array[j].isMarked() || !(array[j].getOwnString().equals(s))) {
                 return false;
             }
         }
@@ -176,6 +168,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void finishGame() {
+        Log.i("gameActivity" , "finishing game");
         if (isGameOver) {
             return;
         } else {
@@ -223,7 +216,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         String s = "";
         Drawable color = new TTTButton(this , -1 , -1).getBackground();
 
-        if (isXNow) {
+        if (isX) {
             s = "X";
             color.setColorFilter( Color.CYAN, PorterDuff.Mode.MULTIPLY);
         } else {

@@ -87,7 +87,7 @@ public class SinglePlayerActivity extends GameActivity {
         List<TTTButton> freeButtons = new LinkedList<>();
         for (TTTButton[] buttonArr : buttons) {
             for (TTTButton b : buttonArr) {
-                if (isButtonPlayable(b)) {
+                if (isButtonPlayable(b) && !isButtonMarkedLikeCurrentTurn(b)) {
                     freeButtons.add(b);
                 }
             }
@@ -98,7 +98,13 @@ public class SinglePlayerActivity extends GameActivity {
 
 
     public boolean isButtonPlayable(TTTButton b) {
-        if (!b.isMarked() || (b instanceof TTTButtonEndless))
+        if (!b.isMarked() || b.numOfClicks != 0)
+            return true;
+        else
+            return false;
+    }
+    public boolean isButtonMarkedLikeCurrentTurn(TTTButton b) {
+        if (b.isMarked() && isXNow == b.getOwnString().equals("X"))
             return true;
         else
             return false;
@@ -163,22 +169,22 @@ public class SinglePlayerActivity extends GameActivity {
 
 
         //check for loss (win for opponent)
-//        for(TTTButton b : freeButtons) {
-//            //save the button stats
-//            TTTButton tempHolder = new TTTButton(b);
-//
-//            //change the button and simulate
-//            simulateButtonPress(b , !isXNow);
-//            if(isGameEnd()) {
-//                b.copyFromOther(tempHolder);    //return to prev state
-//                return b;
-//            }
-//
-//            //check if it's a good option
-//
-//            //load the saved stats back into button
-//            b.copyFromOther(tempHolder);
-//        }
+        for(TTTButton b : freeButtons) {
+            //save the button stats
+            TTTButton tempHolder = new TTTButton(b);
+
+            //change the button and simulate
+            simulateButtonPress(b , !isXNow);
+            if(isGameEnd()) {
+                b.copyFromOther(tempHolder);    //return to prev state
+                return b;
+            }
+
+            //check if it's a good option
+
+            //load the saved stats back into button
+            b.copyFromOther(tempHolder);
+        }
 
         //find a generally-good button
         TTTButton bestSoFar = freeButtons.get(0);
