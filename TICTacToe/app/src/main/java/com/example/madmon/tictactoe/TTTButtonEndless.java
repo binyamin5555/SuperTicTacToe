@@ -1,6 +1,7 @@
 package com.example.madmon.tictactoe;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 
 /**
  * Created by user on 22/01/2017.
@@ -14,11 +15,11 @@ public class TTTButtonEndless extends TTTButton {
     }
 
     @Override
-    public void pressButton(String str, int color) {
+    public void pressButton(String str, Drawable color) {
         super.pressButton(str, color);
 
         numOfClicks = -1;
 
-        setEnabled(true);
+//        setEnabled(true);
     }
 }

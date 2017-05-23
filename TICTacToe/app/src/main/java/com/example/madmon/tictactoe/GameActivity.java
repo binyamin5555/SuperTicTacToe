@@ -3,6 +3,8 @@ package com.example.madmon.tictactoe;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -219,15 +221,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public StringAndColor getSignForTurn(boolean isX) {
         String s = "";
-        int color = Color.BLACK;
+        Drawable color = new TTTButton(this , -1 , -1).getBackground();
 
         if (isXNow) {
             s = "X";
-            color = Color.CYAN;
+            color.setColorFilter( Color.CYAN, PorterDuff.Mode.MULTIPLY);
         } else {
             s = "O";
-            color = Color.YELLOW;
+            color.setColorFilter( Color.YELLOW, PorterDuff.Mode.MULTIPLY);
         }
+
 
         StringAndColor sac = new StringAndColor(s , color);
 
@@ -236,9 +239,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public class StringAndColor {
         public String str;
-        public int color;
+        public Drawable color;
 
-        public StringAndColor(String str, int color) {
+        public StringAndColor(String str, Drawable color) {
             this.str = str;
             this.color = color;
         }

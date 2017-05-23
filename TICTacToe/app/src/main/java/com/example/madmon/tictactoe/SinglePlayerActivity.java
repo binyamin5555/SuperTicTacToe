@@ -163,22 +163,22 @@ public class SinglePlayerActivity extends GameActivity {
 
 
         //check for loss (win for opponent)
-        for(TTTButton b : freeButtons) {
-            //save the button stats
-            TTTButton tempHolder = new TTTButton(b);
-
-            //change the button and simulate
-            simulateButtonPress(b , !isXNow);
-            if(isGameEnd()) {
-                b.copyFromOther(tempHolder);    //return to prev state
-                return b;
-            }
-
-            //check if it's a good option
-
-            //load the saved stats back into button
-            b.copyFromOther(tempHolder);
-        }
+//        for(TTTButton b : freeButtons) {
+//            //save the button stats
+//            TTTButton tempHolder = new TTTButton(b);
+//
+//            //change the button and simulate
+//            simulateButtonPress(b , !isXNow);
+//            if(isGameEnd()) {
+//                b.copyFromOther(tempHolder);    //return to prev state
+//                return b;
+//            }
+//
+//            //check if it's a good option
+//
+//            //load the saved stats back into button
+//            b.copyFromOther(tempHolder);
+//        }
 
         //find a generally-good button
         TTTButton bestSoFar = freeButtons.get(0);
