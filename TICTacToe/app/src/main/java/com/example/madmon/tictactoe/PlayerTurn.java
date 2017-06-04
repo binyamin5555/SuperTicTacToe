@@ -1,14 +1,19 @@
 package com.example.madmon.tictactoe;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+
+import static com.example.madmon.tictactoe.GameSettings.SHARED_PREFS_PLAYERS_NUM_SELECTED;
 
 /**
  * Created by madmon on 28/05/2017.
  */
 
 public enum PlayerTurn {
+
     EX ("X" , Color.CYAN),
     CIRCLE ("O" , Color.YELLOW),
     TRIANGLE ("Δ" , Color.RED),
@@ -31,7 +36,7 @@ public enum PlayerTurn {
         return values()[0];
     }
 
-    public static PlayerTurn getNext(PlayerTurn playerTurn) {
+    public static PlayerTurn getNext(PlayerTurn playerTurn , int numOfPlayers) {
         if(playerTurn == null) {
             return getFirst();
         }
@@ -43,7 +48,9 @@ public enum PlayerTurn {
                     break;
                 }
             }
-            indexOfNextPlayer %= values().length;   //TODO - limit to num of players
+
+            indexOfNextPlayer %= numOfPlayers;
+//            indexOfNextPlayer %= values().length;
             return values()[indexOfNextPlayer];
         }
 

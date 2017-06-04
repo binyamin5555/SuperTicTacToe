@@ -177,7 +177,7 @@ public class SinglePlayerActivity extends GameActivity {
             TTTButton tempHolder = new TTTButton(b);
 
             //change the button and simulate
-            simulateButtonPress(b , PlayerTurn.getNext(currentPlayer));   //TODO - simulate all other players
+            simulateButtonPress(b , PlayerTurn.getNext(currentPlayer , numOfPlayers));   //TODO - simulate all other players
             if(isGameEnd()) {
                 b.copyFromOther(tempHolder);    //return to prev state
                 return b;

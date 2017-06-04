@@ -1,6 +1,8 @@
 package com.example.madmon.tictactoe;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,6 +14,9 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+
+    SharedPreferences sharedPreferences;
+    protected int numOfPlayers;
 
     protected TTTButton[][] buttons; //[num-of-row][num-of-col]
     GridLayout gl;
@@ -26,6 +31,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        numOfPlayers = sharedPreferences.getInt(GameSettings.SHARED_PREFS_PLAYERS_NUM_SELECTED , GameSettings.DEFAULT_FAME_DIM);
 
         isGameOver = false;
         isSomeonePlayingNow = false;
@@ -70,7 +78,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             finishGame();
         }
 
-        currentPlayer = PlayerTurn.getNext(currentPlayer);   //player-turn indicator
+        currentPlayer = PlayerTurn.getNext(currentPlayer , numOfPlayers);   //player-turn indicator
         isSomeonePlayingNow = false;
 }
 
