@@ -26,12 +26,6 @@ public enum PlayerTurn {
 
     PlayerTurn(String displayInButton , int bgColor) {
         this.displayInButton = displayInButton;
-
-//        Drawable color = new TTTButton(ContextClass.getContext() , -1 , -1).getBackground();   //TODO - fix!!! Don't place null
-//        color.setColorFilter( bgColor, PorterDuff.Mode.MULTIPLY);
-//        bgDrawable = color;
-//        bgDrawable = null;
-
         this.bgColor = bgColor;
 
     }

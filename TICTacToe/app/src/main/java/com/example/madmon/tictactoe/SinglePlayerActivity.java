@@ -194,15 +194,15 @@ public class SinglePlayerActivity extends GameActivity {
         int bestAdvantageSoFar = 0;   //number of directions open for win - up to 4
 
 //        //TODO - place back once function is done
-//        for(TTTButton b : freeButtons) {
-//            int currentAdvantage = getButtonDirections(b);
-//            if((currentAdvantage > bestAdvantageSoFar) ||
-//            (currentAdvantage == bestAdvantageSoFar && Math.random() < 0.5))
-//            {
-//                bestSoFar = b;
-//                bestAdvantageSoFar = currentAdvantage;
-//            }
-//        }
+        for(TTTButton b : freeButtons) {
+            int currentAdvantage = getButtonDirections(b);
+            if((currentAdvantage > bestAdvantageSoFar) ||
+            (currentAdvantage == bestAdvantageSoFar && Math.random() < 0.5))
+            {
+                bestSoFar = b;
+                bestAdvantageSoFar = currentAdvantage;
+            }
+        }
 
         return bestSoFar;
     }
@@ -225,52 +225,67 @@ public class SinglePlayerActivity extends GameActivity {
         TTTButton[] row = buttons[rowIndex];
         boolean isWinnable = true;
         for(TTTButton b : row) {
-            if(b.getText().equals("") && b.numOfClicks == 0) {
+            if(isRivalPermButton(b)) {
                 isWinnable = false;
                 break;
             }
         }
         if(isWinnable) {advantageCounter++;}
 
-//        int rowIndex = checkMyStatus.colIndex;
-//        TTTButton[] row = buttons[rowIndex];
-//        if (isArrayWinning(row)) {
-//            advantageCounter++;
-//        }
-//
-//
-//        //check columns
-//        for (int j = 0; j < GameSettings.gameDim; j++) {
-//            TTTButton[] col = new TTTButton[GameSettings.gameDim];
-//
-//            for (int i = 0; i < GameSettings.gameDim; i++) {
-//                col[i] = buttons[i][j];
-//            }
-//
-//            if (isArrayWinning(col)) {
-//                advantageCounter++;
-//            }
-//
-//        }
-//
-//        //check diagonal 1
-//        TTTButton[] diag = new TTTButton[GameSettings.gameDim];
-//        for (int i = 0; i < GameSettings.gameDim; i++) {
-//            diag[i] = buttons[i][i];
-//        }
-//        if (isArrayWinning(diag)) {
-//            advantageCounter++;
-//        }
-//
-//        //check diagonal 2
-//        TTTButton[] diag2 = new TTTButton[GameSettings.gameDim];
-//        for (int i = 0; i < GameSettings.gameDim; i++) {
-//            diag2[i] = buttons[i][GameSettings.gameDim - i - 1];
-//        }
-//        if (isArrayWinning(diag2)) {
-//            advantageCounter++;
-//        }
+        //check if col is winnable
+        int colIndex = checkMyStatus.colIndex;
+        TTTButton[] col = new TTTButton[buttons.length];
+        for(int i = 0 ; i < col.length ; i++) {
+            col[i] = buttons[i][colIndex];
+        }
+        isWinnable = true;
+        for(TTTButton b : col) {
+            if(isRivalPermButton(b)) {
+                isWinnable = false;
+                break;
+            }
+        }
+        if(isWinnable) {advantageCounter++;}
+
+
+        //diagonal from upper left to down right
+        if(checkMyStatus.rowIndex == checkMyStatus.colIndex) {
+            TTTButton[] diag = new TTTButton[buttons.length];
+            for(int i = 0 ; i < diag.length ; i++) {
+                diag[i] = buttons[i][i];
+            }
+            isWinnable = true;
+            for(TTTButton b : diag) {
+                if(isRivalPermButton(b)) {
+                    isWinnable = false;
+                    break;
+                }
+            }
+            if(isWinnable) {advantageCounter++;}
+        }
+
+        //diagonal from upper right to down left
+        if(checkMyStatus.rowIndex == buttons.length - checkMyStatus.colIndex) {
+            TTTButton[] diag = new TTTButton[buttons.length];
+            for(int i = 0 ; i < diag.length ; i++) {
+                diag[i] = buttons[i][buttons.length-1 - i];
+            }
+            isWinnable = true;
+            for(TTTButton b : diag) {
+                if(isRivalPermButton(b)) {
+                    isWinnable = false;
+                    break;
+                }
+            }
+            if(isWinnable) {advantageCounter++;}
+        }
 
         return advantageCounter;
+    }
+
+    private boolean isRivalPermButton(TTTButton b) {
+        return b.getOwner() != null
+                && !b.getOwner().equals(computerTurn)
+                && b.numOfClicks == 0;
     }
 }
