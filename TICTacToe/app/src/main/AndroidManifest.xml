@@ -19,7 +19,6 @@
             android:name=".EndGame"
             android:label="@string/title_activity_end_game"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainMenuActivity$GameActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".SinglePlayerActivity" />
         <activity android:name=".GameActivity"></activity>

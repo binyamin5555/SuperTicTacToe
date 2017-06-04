@@ -1,5 +1,6 @@
 package com.example.madmon.tictactoe;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -20,15 +21,18 @@ public enum PlayerTurn {
     SQUARE ("□" , Color.GREEN);
 
     public final String displayInButton;
-    public final Drawable bgDrawable;
+//    public final Drawable bgDrawable;
+    public final int bgColor;
 
     PlayerTurn(String displayInButton , int bgColor) {
         this.displayInButton = displayInButton;
 
-//        Drawable color = new TTTButton(null , -1 , -1).getBackground();   //TODO - fix!!! Don't place null
+//        Drawable color = new TTTButton(ContextClass.getContext() , -1 , -1).getBackground();   //TODO - fix!!! Don't place null
 //        color.setColorFilter( bgColor, PorterDuff.Mode.MULTIPLY);
 //        bgDrawable = color;
-        bgDrawable = null;
+//        bgDrawable = null;
+
+        this.bgColor = bgColor;
 
     }
 
@@ -55,4 +59,11 @@ public enum PlayerTurn {
         }
 
     }
+
+    public Drawable getDefaultDrawable(Context context) {
+        Drawable color = new TTTButton(context , -1 , -1).getBackground();   //TODO - fix!!! Don't place null
+        color.setColorFilter( bgColor, PorterDuff.Mode.MULTIPLY);
+        return color;
+    }
+
 }

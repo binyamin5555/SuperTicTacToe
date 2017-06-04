@@ -85,7 +85,7 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
 
         this.setText(playerTurn.displayInButton);
         this.owner = playerTurn;
-        this.setBackground(playerTurn.bgDrawable);
+        this.setBackground(playerTurn.getDefaultDrawable(getContext()));
 
         if(numOfClicks == 0)
            this.setEnabled(false);
