@@ -12,13 +12,13 @@ public class SinglePlayerActivity extends GameActivity {
 
     private static final long lockTime = 2000;  //time until button is chosen
 
-    boolean isComputerX;
+    PlayerTurn computerTurn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        isComputerX = false;
+        computerTurn = PlayerTurn.TRIANGLE;
 
         (new CheckPlayThread()).execute(this);
     }
@@ -27,8 +27,11 @@ public class SinglePlayerActivity extends GameActivity {
     public void doTurn(TTTButton choice) {
         super.doTurn(choice);
 
-        //lock all buttons
-        lockAllButtons();
+
+        if(currentPlayer == computerTurn) {
+            //lock all buttons
+            lockAllButtons();
+        }
     }
 
     public void cumputeTurnStart() {
@@ -36,7 +39,7 @@ public class SinglePlayerActivity extends GameActivity {
 
         Log.i("computer turn" , "checking if my turn");
 
-        if (isXNow != isComputerX) {
+        if (currentPlayer != computerTurn) {
             Log.i("computer turn" , "not my turn.......");
             return;
         }
@@ -104,7 +107,7 @@ public class SinglePlayerActivity extends GameActivity {
             return false;
     }
     public boolean isButtonMarkedLikeCurrentTurn(TTTButton b) {
-        if (b.isMarked() && isXNow == b.getOwnString().equals("X"))
+        if (b.isMarked() && currentPlayer == b.getOwner())
             return true;
         else
             return false;
@@ -174,7 +177,7 @@ public class SinglePlayerActivity extends GameActivity {
             TTTButton tempHolder = new TTTButton(b);
 
             //change the button and simulate
-            simulateButtonPress(b , !isXNow);
+            simulateButtonPress(b , PlayerTurn.getNext(currentPlayer));   //TODO - simulate all other players
             if(isGameEnd()) {
                 b.copyFromOther(tempHolder);    //return to prev state
                 return b;
@@ -190,10 +193,12 @@ public class SinglePlayerActivity extends GameActivity {
         TTTButton bestSoFar = freeButtons.get(0);
         int bestAdvantageSoFar = 0;   //number of directions open for win - up to 4
 
-        //TODO - place back once function is done
+//        //TODO - place back once function is done
 //        for(TTTButton b : freeButtons) {
 //            int currentAdvantage = getButtonDirections(b);
-//            if(currentAdvantage > bestAdvantageSoFar) {
+//            if((currentAdvantage > bestAdvantageSoFar) ||
+//            (currentAdvantage == bestAdvantageSoFar && Math.random() < 0.5))
+//            {
 //                bestSoFar = b;
 //                bestAdvantageSoFar = currentAdvantage;
 //            }
@@ -203,8 +208,8 @@ public class SinglePlayerActivity extends GameActivity {
     }
 
 
-    public void simulateButtonPress(TTTButton b , boolean forcedTurn) {
-        setButtonState(b , forcedTurn);
+    public void simulateButtonPress(TTTButton b , PlayerTurn playerTurn) {
+        setButtonState(b , playerTurn);
     }
 
 
@@ -217,46 +222,54 @@ public class SinglePlayerActivity extends GameActivity {
         int advantageCounter = 0;
         //check if row is winnable
         int rowIndex = checkMyStatus.rowIndex;
-        for (int i = 0; i < GameSettings.gameDim; i++) {
-            TTTButton[] row = buttons[i];
-            if (isArrayWinning(row)) {
-                advantageCounter++;
+        TTTButton[] row = buttons[rowIndex];
+        boolean isWinnable = true;
+        for(TTTButton b : row) {
+            if(b.getText().equals("") && b.numOfClicks == 0) {
+                isWinnable = false;
+                break;
             }
-
-
         }
+        if(isWinnable) {advantageCounter++;}
 
-        //check columns
-        for (int j = 0; j < GameSettings.gameDim; j++) {
-            TTTButton[] col = new TTTButton[GameSettings.gameDim];
-
-            for (int i = 0; i < GameSettings.gameDim; i++) {
-                col[i] = buttons[i][j];
-            }
-
-            if (isArrayWinning(col)) {
-                advantageCounter++;
-            }
-
-        }
-
-        //check diagonal 1
-        TTTButton[] diag = new TTTButton[GameSettings.gameDim];
-        for (int i = 0; i < GameSettings.gameDim; i++) {
-            diag[i] = buttons[i][i];
-        }
-        if (isArrayWinning(diag)) {
-            advantageCounter++;
-        }
-
-        //check diagonal 2
-        TTTButton[] diag2 = new TTTButton[GameSettings.gameDim];
-        for (int i = 0; i < GameSettings.gameDim; i++) {
-            diag2[i] = buttons[i][GameSettings.gameDim - i - 1];
-        }
-        if (isArrayWinning(diag2)) {
-            advantageCounter++;
-        }
+//        int rowIndex = checkMyStatus.colIndex;
+//        TTTButton[] row = buttons[rowIndex];
+//        if (isArrayWinning(row)) {
+//            advantageCounter++;
+//        }
+//
+//
+//        //check columns
+//        for (int j = 0; j < GameSettings.gameDim; j++) {
+//            TTTButton[] col = new TTTButton[GameSettings.gameDim];
+//
+//            for (int i = 0; i < GameSettings.gameDim; i++) {
+//                col[i] = buttons[i][j];
+//            }
+//
+//            if (isArrayWinning(col)) {
+//                advantageCounter++;
+//            }
+//
+//        }
+//
+//        //check diagonal 1
+//        TTTButton[] diag = new TTTButton[GameSettings.gameDim];
+//        for (int i = 0; i < GameSettings.gameDim; i++) {
+//            diag[i] = buttons[i][i];
+//        }
+//        if (isArrayWinning(diag)) {
+//            advantageCounter++;
+//        }
+//
+//        //check diagonal 2
+//        TTTButton[] diag2 = new TTTButton[GameSettings.gameDim];
+//        for (int i = 0; i < GameSettings.gameDim; i++) {
+//            diag2[i] = buttons[i][GameSettings.gameDim - i - 1];
+//        }
+//        if (isArrayWinning(diag2)) {
+//            advantageCounter++;
+//        }
 
         return advantageCounter;
     }

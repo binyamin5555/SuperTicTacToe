@@ -15,8 +15,8 @@ public class TTTButtonEndless extends TTTButton {
     }
 
     @Override
-    public void pressButton(String str, Drawable color) {
-        super.pressButton(str, color);
+    public void pressButton(PlayerTurn playerTurn) {
+        super.pressButton(playerTurn);
 
             numOfClicks = -1;
 

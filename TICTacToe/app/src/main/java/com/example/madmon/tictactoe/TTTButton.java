@@ -19,7 +19,7 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
 
     public static int textSize = 50;
     public int numOfClicks;
-    protected String ownString;
+    protected PlayerTurn owner;
 
 
     private boolean isMarked;
@@ -52,7 +52,7 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
         this.givenContext = b.givenContext;
         doCtorStuff(b.numOfClicks , b.rowIndex , b.colIndex);
         this.setText(b.getText());
-        this.ownString = b.ownString;
+        this.owner = b.owner;
         this.setEnabled(b.isEnabled());
         this.isMarked = b.isMarked;
 
@@ -61,7 +61,7 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
     }
 
     private void doCtorStuff(int numOfClicks , int rowIndex , int colIndex) {
-        ownString = "";
+        owner = null;
         this.rowIndex = rowIndex;
         this.colIndex = colIndex;
         this.numOfClicks = numOfClicks;
@@ -76,16 +76,16 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
         setMinimumHeight(h);
     }
 
-    public void pressButton(String str , Drawable color) {
+    public void pressButton(PlayerTurn playerTurn) {
 
         Log.i("button" , "pressed button " + this);
         isMarked = true;
 
         numOfClicks--;
 
-        this.setText(str);
-        this.ownString = str;
-        this.setBackground(color);
+        this.setText(playerTurn.displayInButton);
+        this.owner = playerTurn;
+        this.setBackground(playerTurn.bgDrawable);
 
         if(numOfClicks == 0)
            this.setEnabled(false);
@@ -99,8 +99,8 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
 
     }
 
-    public String getOwnString() {
-        return ownString;
+    public PlayerTurn getOwner() {
+        return owner;
     }
 
     @Override
@@ -115,7 +115,7 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
                 "rowIndex=" + rowIndex +
                 ", colIndex=" + colIndex +
                 ", numOfClicks=" + numOfClicks +
-                ", ownString='" + ownString + '\'' +
+                ", owner='" + owner + '\'' +
                 ", isMarked=" + isMarked +
                 ", givenContext=" + givenContext +
                 '}';

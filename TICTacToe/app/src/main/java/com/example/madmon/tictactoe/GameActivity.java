@@ -1,10 +1,7 @@
 package com.example.madmon.tictactoe;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,12 +16,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected TTTButton[][] buttons; //[num-of-row][num-of-col]
     GridLayout gl;
 
-    protected boolean isXNow;
-
     protected boolean isGameOver;
     boolean isSomeonePlayingNow;
 
-
+    PlayerTurn currentPlayer;
 
 
     @Override
@@ -32,9 +27,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        isXNow = true;
         isGameOver = false;
         isSomeonePlayingNow = false;
+        currentPlayer = PlayerTurn.getFirst();
 
         gl = (GridLayout) findViewById(R.id.gridLayout);
 
@@ -75,22 +70,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             finishGame();
         }
 
-        isXNow = !isXNow;   //player-turn indicator
+        currentPlayer = PlayerTurn.getNext(currentPlayer);   //player-turn indicator
         isSomeonePlayingNow = false;
 }
 
     public void setButtonState(TTTButton b) {
-        setButtonState(b ,isXNow);
+        setButtonState(b , currentPlayer);
     }
-    public void setButtonState(TTTButton b , boolean forcedTurn) {
+    public void setButtonState(TTTButton b , PlayerTurn playerTurn) {
 
-        StringAndColor sac = getSignForTurn(forcedTurn);
-        b.pressButton(sac.str, sac.color);
+        b.pressButton(playerTurn);
 
     }
 
     public boolean isGameEnd() {
-        Log.i("gameActivity" , "checking game end for turn " + (isXNow? "X": "O"));
+        Log.i("gameActivity" , "checking game end for turn " + currentPlayer.displayInButton);
         //check rows
         for (int i = 0; i < GameSettings.gameDim; i++) {
             TTTButton[] row = buttons[i];
@@ -136,15 +130,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public boolean isArrayWinning(TTTButton[] array) {
-        String s = "";
+        PlayerTurn firstOwner = null;
         if (array[0].isMarked()) {
-            s = array[0].getOwnString();
+            firstOwner = array[0].getOwner();
         } else {
             return false;
         }
 
         for (int j = 0; j < array.length; j++) {
-            if (!array[j].isMarked() || !(array[j].getOwnString().equals(s))) {
+            if (!array[j].isMarked() || !(array[j].getOwner().equals(firstOwner))) {
                 return false;
             }
         }
@@ -152,13 +146,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    public boolean isArrayClearForCurrentPlayer(TTTButton[] array , boolean isCurrentPlayerX) {
+    public boolean isArrayClearForCurrentPlayer(TTTButton[] array , PlayerTurn playerTurn) {
 
 
         for(int j = 0; j < array.length; j++) {
-            StringAndColor sac = getSignForTurn(isCurrentPlayerX);
 
-            if(sac.str != array[j].getText() && array[j].numOfClicks == 0) {
+            if(playerTurn != array[j].getOwner() && array[j].numOfClicks == 0) {
                 return false;
             }
         }
@@ -175,17 +168,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             isGameOver = true;
         }
 
-        String s;
-        if (isXNow)
-            s = "X";
-        else
-            s = "O";
-
         //dump all buttons
         GridLayout gl = (GridLayout) findViewById(R.id.gridLayout);
         gl.removeAllViews();
 
-        Toast.makeText(this, "Winner Player " + s + "!", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Winner PlayerTurn " + currentPlayer.displayInButton + "!", Toast.LENGTH_LONG).show();
 
         Intent in = new Intent(this, EndGame.class);
         startActivity(in);
@@ -212,32 +199,5 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         return Math.min(buttonMaxWidth, buttonMaxHeight);
     }
 
-    public StringAndColor getSignForTurn(boolean isX) {
-        String s = "";
-        Drawable color = new TTTButton(this , -1 , -1).getBackground();
-
-        if (isX) {
-            s = "X";
-            color.setColorFilter( Color.CYAN, PorterDuff.Mode.MULTIPLY);
-        } else {
-            s = "O";
-            color.setColorFilter( Color.YELLOW, PorterDuff.Mode.MULTIPLY);
-        }
-
-
-        StringAndColor sac = new StringAndColor(s , color);
-
-        return sac;
-    }
-
-    public class StringAndColor {
-        public String str;
-        public Drawable color;
-
-        public StringAndColor(String str, Drawable color) {
-            this.str = str;
-            this.color = color;
-        }
-    }
 }
 
