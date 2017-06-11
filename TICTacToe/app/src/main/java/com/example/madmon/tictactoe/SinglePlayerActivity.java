@@ -177,11 +177,21 @@ public class SinglePlayerActivity extends GameActivity {
             TTTButton tempHolder = new TTTButton(b);
 
             //change the button and simulate
-            simulateButtonPress(b , PlayerTurn.getNext(currentPlayer , numOfPlayers));   //TODO - simulate all other players
-            if(isGameEnd()) {
-                b.copyFromOther(tempHolder);    //return to prev state
-                return b;
+            PlayerTurn otherPlayer = PlayerTurn.getNext(currentPlayer , numOfPlayers);
+            while(otherPlayer != currentPlayer) {
+                simulateButtonPress(b , otherPlayer);
+                if(isGameEnd()) {
+                    b.copyFromOther(tempHolder);    //return to prev state
+                    return b;
+                }
+
+                otherPlayer = PlayerTurn.getNext(otherPlayer , numOfPlayers);
             }
+//            simulateButtonPress(b , PlayerTurn.getNext(currentPlayer , numOfPlayers));   //TODO - simulate all other players
+//            if(isGameEnd()) {
+//                b.copyFromOther(tempHolder);    //return to prev state
+//                return b;
+//            }
 
             //check if it's a good option
 
@@ -193,7 +203,6 @@ public class SinglePlayerActivity extends GameActivity {
         TTTButton bestSoFar = freeButtons.get(0);
         int bestAdvantageSoFar = 0;   //number of directions open for win - up to 4
 
-//        //TODO - place back once function is done
         for(TTTButton b : freeButtons) {
             int currentAdvantage = getButtonDirections(b);
             if((currentAdvantage > bestAdvantageSoFar) ||
@@ -284,8 +293,8 @@ public class SinglePlayerActivity extends GameActivity {
     }
 
     private boolean isRivalPermButton(TTTButton b) {
-        return b.getOwner() != null
-                && !b.getOwner().equals(computerTurn)
-                && b.numOfClicks == 0;
+        return b.getOwner() != null  //owned by someone in general
+                && !b.getOwner().equals(currentPlayer)  //owned by rival
+                && b.numOfClicks == 0;  //permanently
     }
 }
