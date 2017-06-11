@@ -12,15 +12,38 @@ public class SinglePlayerActivity extends GameActivity {
 
     private static final long lockTime = 2000;  //time until button is chosen
 
-    PlayerTurn computerTurn;
+    public int numOfComputerPlayers;
+
+    PlayerTurn[] computerTurn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = GameSettings.getSharedPreferences(this);
+        numOfComputerPlayers = Math.min(numOfPlayers ,3);
+//        numOfComputerPlayers = Math.min(numOfPlayers , sharedPreferences.getInt(GameSettings.SHARED_PREFS_PLAYERS_NUM_SELECTED , GameSettings.DEFAULT_FAME_DIM));
 
-        computerTurn = PlayerTurn.TRIANGLE;
+        boolean[] isComputerPlayer = new boolean[numOfPlayers];
+        for(int i = 0 ; i < numOfComputerPlayers ; i++) {
+            int randI;
+            do {
+                randI = (int) (numOfPlayers * Math.random());   //get random index in array
+            }while(isComputerPlayer[randI]);    //already a comp player
+
+            isComputerPlayer[randI] = true;
+        }
+
+        computerTurn = new PlayerTurn[numOfComputerPlayers];
+        for(int i = 0, j = 0 ; i < isComputerPlayer.length ; i++) {
+            if(isComputerPlayer[i]) {
+                computerTurn[j] = PlayerTurn.values()[i];
+                j++;
+            }
+        }
 
         (new CheckPlayThread()).execute(this);
+
+        setPlayerIndicators(isComputerPlayer);
     }
 
     @Override
@@ -28,10 +51,20 @@ public class SinglePlayerActivity extends GameActivity {
         super.doTurn(choice);
 
 
-        if(currentPlayer == computerTurn) {
+        if(isPlayerComp(currentPlayer)) {
             //lock all buttons
             lockAllButtons();
         }
+    }
+
+    public boolean isPlayerComp(PlayerTurn playerTurn) {
+        for(PlayerTurn pt : computerTurn) {
+            if(pt == playerTurn) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void cumputeTurnStart() {
@@ -39,7 +72,7 @@ public class SinglePlayerActivity extends GameActivity {
 
         Log.i("computer turn" , "checking if my turn");
 
-        if (currentPlayer != computerTurn) {
+        if (!isPlayerComp(currentPlayer)) {
             Log.i("computer turn" , "not my turn.......");
             return;
         }

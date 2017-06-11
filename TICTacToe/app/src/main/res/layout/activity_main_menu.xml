@@ -38,12 +38,5 @@
             android:onClick="moveToAnotherActivity"
             android:text="@string/start_single_button_text" />
 
-        <Button
-            android:id="@+id/startMulti"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.07"
-            android:onClick="moveToAnotherActivity"
-            android:text="@string/start_button_text" />
     </LinearLayout>
 </RelativeLayout>

@@ -18,6 +18,7 @@ public enum PlayerTurn {
     EX ("X" , Color.CYAN),
     CIRCLE ("O" , Color.YELLOW),
     TRIANGLE ("Δ" , Color.RED),
+    PENTAGRAM ("⛤" , Color.MAGENTA),
     SQUARE ("□" , Color.GREEN);
 
     public final String displayInButton;

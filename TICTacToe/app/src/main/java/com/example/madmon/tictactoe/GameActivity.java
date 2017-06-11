@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     protected TTTButton[][] buttons; //[num-of-row][num-of-col]
     GridLayout gl;
+    LinearLayout playersIndicator;
 
     protected boolean isGameOver;
     boolean isSomeonePlayingNow;
@@ -72,6 +74,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public void setPlayerIndicators(boolean[] isComputer) {
+        playersIndicator = (LinearLayout) findViewById(R.id.playersIndicator);
+        for(int i = 0 ; i < numOfPlayers ; i++) {
+            playersIndicator.addView(new PlayerVisualView(this , PlayerTurn.values()[i] , isComputer[i]));
+        }
+
+        PlayerVisualView.setPlaying(currentPlayer); //set indicator on first
+    }
+
     public void doTurn(TTTButton choice) {
         isSomeonePlayingNow = true;
         Log.i("doing turn" , "on button " + choice);
@@ -82,6 +93,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         currentPlayer = PlayerTurn.getNext(currentPlayer , numOfPlayers);   //player-turn indicator
+        PlayerVisualView.setPlaying(currentPlayer);
         isSomeonePlayingNow = false;
 }
 

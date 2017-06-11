@@ -20,4 +20,18 @@
         android:id="@+id/gridLayout">
 
     </com.example.madmon.tictactoe.SquareGridLayout>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/gridLayout">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/playersIndicator"/>
+    </HorizontalScrollView>
+
+
 </RelativeLayout>

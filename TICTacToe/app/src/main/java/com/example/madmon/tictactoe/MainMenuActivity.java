@@ -46,10 +46,10 @@ public class MainMenuActivity extends AppCompatActivity {
             case R.id.startSingle:
                 startActivity(new Intent(this , SinglePlayerActivity.class));
                 break;
-            case R.id.startMulti:
-                GameNode=true;
-                startActivity(new Intent(this , GameActivity.class));
-                break;
+//            case R.id.startMulti:
+//                GameNode=true;
+//                startActivity(new Intent(this , GameActivity.class));
+//                break;
             default:
                 Log.e("switch problem" , "should not have reached deafualt");
         }
