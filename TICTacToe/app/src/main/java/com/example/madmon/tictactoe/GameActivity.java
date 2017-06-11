@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Point;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,8 +33,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        sharedPreferences = GameSettings.getSharedPreferences(this);
         numOfPlayers = sharedPreferences.getInt(GameSettings.SHARED_PREFS_PLAYERS_NUM_SELECTED , GameSettings.DEFAULT_FAME_DIM);
+
+        Log.i("num_players" , ": " + numOfPlayers);
 
         isGameOver = false;
         isSomeonePlayingNow = false;

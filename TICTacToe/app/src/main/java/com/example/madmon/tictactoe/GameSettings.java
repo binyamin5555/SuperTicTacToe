@@ -1,5 +1,9 @@
 package com.example.madmon.tictactoe;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 /**
  * Created by user on 14/03/2017.
  */
@@ -17,4 +21,7 @@ public class GameSettings {
     public static int gameDim = DEFAULT_FAME_DIM;
     public static int persistantTileAppearancePercentage = DEFAULT_PERSISTANT_PERCENTAGE;
 
+    public static SharedPreferences getSharedPreferences(Context context){
+        return PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+    }
 }

@@ -57,15 +57,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/button3"
-                    android:onClick="confirmSetting"
-                    android:background="@drawable/confirmation" />
-
-
 
             </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.example.madmon.tictactoe;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -45,7 +46,8 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
 
 
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+//        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = GameSettings.getSharedPreferences(this);
 
         if(sharedPref.contains(SHARED_PREFS_PLAYERS_NUM_SELECTED)) {
             int indexOfItem = sharedPref.getInt(SHARED_PREFS_PLAYERS_NUM_SELECTED , 0) - GameSettings.MIN_NUMBER_OF_PLAYERS;
@@ -85,7 +87,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = GameSettings.getSharedPreferences(this);
         SharedPreferences.Editor editor = sharedPref.edit();
 
         if(parent.equals(numOfPlayersSpinner)) {
@@ -137,6 +139,5 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
         public int getPersistance(){return  persistance;}
     }
-
 
 }
