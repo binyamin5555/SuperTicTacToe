@@ -20,8 +20,8 @@ public class SinglePlayerActivity extends GameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences = GameSettings.getSharedPreferences(this);
-        numOfComputerPlayers = Math.min(numOfPlayers ,3);
-//        numOfComputerPlayers = Math.min(numOfPlayers , sharedPreferences.getInt(GameSettings.SHARED_PREFS_PLAYERS_NUM_SELECTED , GameSettings.DEFAULT_FAME_DIM));
+        numOfComputerPlayers = Math.min(numOfPlayers ,numOfCompPlayers);
+//        numOfComputerPlayers = Math.min(numOfPlayers , sharedPreferences.getInt(GameSettings.SHARED_PREFS_PLAYERS_NUM_SELECTED , GameSettings.DEFAULT_GAME_DIM));
 
         boolean[] isComputerPlayer = new boolean[numOfPlayers];
         for(int i = 0 ; i < numOfComputerPlayers ; i++) {

@@ -14,82 +14,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:orientation="horizontal"
+            <Spinner
+                android:id="@+id/spinnerBoardSize"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-                <EditText
-                    android:hint="Game Board Size"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:inputType="number"
-                    android:id="@+id/gameSizeEditText"
-                    android:layout_weight="1" />
-
-                <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/bordSizeConfirm"
-                    android:onClick="confirmSetting"
-                    android:background="@drawable/confirmation" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
+            <Spinner
+                android:id="@+id/spinnerAllPlayers"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
-                <Spinner
-                    android:id="@+id/spinnerPlayers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
+            <Spinner
+                android:id="@+id/spinnerComputerPlayers"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content" />
 
-                <SeekBar
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/magicRandomalitySeek"
-                    android:progress="@integer/defaultPersistanceChance"
-                    android:layout_weight="1"
-                    />
+            <Spinner
+                android:id="@+id/spinnerSpecialButtons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-                <TextView
-                    android:layout_width="67dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text=""
-                    android:id="@+id/randomalityDisplayText"
-                    />
-
-                <ImageButton
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:id="@+id/persistanceConfirm"
-                    android:onClick="confirmSetting"
-                    android:background="@drawable/confirmation" />
-
-            </LinearLayout>
+            <Spinner
+                android:id="@+id/spinnerPressLimit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
         </LinearLayout>

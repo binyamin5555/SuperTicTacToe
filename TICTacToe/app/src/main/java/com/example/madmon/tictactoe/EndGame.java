@@ -72,7 +72,13 @@ public class EndGame extends AppCompatActivity {
                                 Log.i("exiting" , "system exit");
 //                                android.os.Process.killProcess(android.os.Process.myPid());
 //                                System.exit(1);
-                                android.os.Process.killProcess(android.os.Process.myPid());
+//                                android.os.Process.killProcess(android.os.Process.myPid());
+
+                                //TODO - terminate the app
+                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                intent.addCategory(Intent.CATEGORY_HOME);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
                             }
                         })
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {

@@ -18,7 +18,7 @@ import java.util.LinkedList;
 
 public class PlayerVisualView extends LinearLayout {
 
-    private static final int RESCALED_BITMAP_SIZE = 100;
+    private static final int RESCALED_BITMAP_SIZE = 200;
 
     public static LinkedList<PlayerVisualView> allMadeViews = new LinkedList<>();
     public PlayerTurn ownTurn;

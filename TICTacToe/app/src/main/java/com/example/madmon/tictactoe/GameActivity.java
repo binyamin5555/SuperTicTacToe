@@ -18,7 +18,11 @@ import android.widget.Toast;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
     SharedPreferences sharedPreferences;
+    protected int gameDim;
     protected int numOfPlayers;
+    protected int numOfCompPlayers;
+    protected int chanceOfMagicButton;
+    protected int magicButtonPressLimit;
 
     protected TTTButton[][] buttons; //[num-of-row][num-of-col]
     GridLayout gl;
@@ -35,10 +39,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        sharedPreferences = GameSettings.getSharedPreferences(this);
-        numOfPlayers = sharedPreferences.getInt(GameSettings.SHARED_PREFS_PLAYERS_NUM_SELECTED , GameSettings.DEFAULT_FAME_DIM);
-
-        Log.i("num_players" , ": " + numOfPlayers);
+        gameDim = GameSettings.getBoardSize(this);
+        numOfPlayers = GameSettings.getNumOfPlayer(this);
+        numOfCompPlayers = GameSettings.getNumOfCompPlayers(this);
+        chanceOfMagicButton = GameSettings.getChanceForMagic(this);
+        magicButtonPressLimit = GameSettings.getMagicPressLimit(this);
 
         isGameOver = false;
         isSomeonePlayingNow = false;
@@ -47,15 +52,15 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         gl = (GridLayout) findViewById(R.id.gridLayout);
 
         android.widget.AbsListView.LayoutParams params = getParamsForScreenSize();
-        gl.setColumnCount(GameSettings.gameDim);
+        gl.setColumnCount(gameDim);
 
         TTTButton.setButtonsSizes(this, getButtonOptimalSize());
         //
-        buttons = new TTTButton[GameSettings.gameDim][GameSettings.gameDim];
+        buttons = new TTTButton[gameDim][gameDim];
 
-        for (int i = 0; i < GameSettings.gameDim; i++) {
-            for (int j = 0; j < GameSettings.gameDim; j++) {
-                if (Math.random() < (double) GameSettings.persistantTileAppearancePercentage / 100)
+        for (int i = 0; i < gameDim; i++) {
+            for (int j = 0; j < gameDim; j++) {
+                if (Math.random() < (double) chanceOfMagicButton / 100)
                     buttons[i][j] = new TTTButtonEndless(this , i , j);
                 else
                     buttons[i][j] = new TTTButton(this , i , j);
@@ -76,6 +81,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     public void setPlayerIndicators(boolean[] isComputer) {
         playersIndicator = (LinearLayout) findViewById(R.id.playersIndicator);
+        playersIndicator.removeAllViews();
         for(int i = 0 ; i < numOfPlayers ; i++) {
             playersIndicator.addView(new PlayerVisualView(this , PlayerTurn.values()[i] , isComputer[i]));
         }
@@ -109,7 +115,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     public boolean isGameEnd() {
         Log.i("gameActivity" , "checking game end for turn " + currentPlayer.displayInButton);
         //check rows
-        for (int i = 0; i < GameSettings.gameDim; i++) {
+        for (int i = 0; i < gameDim; i++) {
             TTTButton[] row = buttons[i];
             if (isArrayWinning(row)) {
                 return true;
@@ -117,10 +123,10 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         //check columns
-        for (int j = 0; j < GameSettings.gameDim; j++) {
-            TTTButton[] col = new TTTButton[GameSettings.gameDim];
+        for (int j = 0; j < gameDim; j++) {
+            TTTButton[] col = new TTTButton[gameDim];
 
-            for (int i = 0; i < GameSettings.gameDim; i++) {
+            for (int i = 0; i < gameDim; i++) {
                 col[i] = buttons[i][j];
             }
 
@@ -131,8 +137,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         //check diagonal 1
-        TTTButton[] diag = new TTTButton[GameSettings.gameDim];
-        for (int i = 0; i < GameSettings.gameDim; i++) {
+        TTTButton[] diag = new TTTButton[gameDim];
+        for (int i = 0; i < gameDim; i++) {
             diag[i] = buttons[i][i];
         }
         if (isArrayWinning(diag)) {
@@ -140,9 +146,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         //check diagonal 2
-        TTTButton[] diag2 = new TTTButton[GameSettings.gameDim];
-        for (int i = 0; i < GameSettings.gameDim; i++) {
-            diag2[i] = buttons[i][GameSettings.gameDim - i - 1];
+        TTTButton[] diag2 = new TTTButton[gameDim];
+        for (int i = 0; i < gameDim; i++) {
+            diag2[i] = buttons[i][gameDim - i - 1];
         }
         if (isArrayWinning(diag2)) {
             return true;
@@ -216,8 +222,8 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_main2);
 
         //take into account the activity's layout padding
-        int buttonMaxWidth = (size.x - rl.getPaddingLeft() - rl.getPaddingRight()) / GameSettings.gameDim;
-        int buttonMaxHeight = (size.y - rl.getPaddingTop() - rl.getPaddingBottom()) / GameSettings.gameDim;
+        int buttonMaxWidth = (size.x - rl.getPaddingLeft() - rl.getPaddingRight()) / gameDim;
+        int buttonMaxHeight = (size.y - rl.getPaddingTop() - rl.getPaddingBottom()) / gameDim;
 
         return Math.min(buttonMaxWidth, buttonMaxHeight);
     }
