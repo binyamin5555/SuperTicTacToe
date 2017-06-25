@@ -2,6 +2,7 @@ package com.example.madmon.tictactoe;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,8 @@ public class EndGame extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_game);
+
+        MusicPlayer.playRaw(this , R.raw.cheer);
 
         Log.i("starting endgame" , "started");
 //        StackTraceElement[] elements = Thread.currentThread().getStackTrace();

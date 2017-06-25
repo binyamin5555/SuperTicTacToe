@@ -60,10 +60,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         for (int i = 0; i < gameDim; i++) {
             for (int j = 0; j < gameDim; j++) {
-                if (Math.random() < (double) chanceOfMagicButton / 100)
-                    buttons[i][j] = new TTTButtonEndless(this , i , j);
-                else
-                    buttons[i][j] = new TTTButton(this , i , j);
+                if (Math.random() < (double) chanceOfMagicButton / 100) {   //special button
+                    int buttonPressesLimit = 1+ (int) (magicButtonPressLimit * Math.random());  //going to [1 , magicButtonPressLimit]
+                    buttons[i][j] = new TTTButton(this, buttonPressesLimit, i, j);
+
+                }
+                else {  //regular button
+                    buttons[i][j] = new TTTButton(this, i, j);
+                }
 
                 buttons[i][j].setOnClickListener(this);
                 //                buttons[i][j].setWidthHeight(gl.getWidth()/gameDim , gl.getHeight()/gameDim);

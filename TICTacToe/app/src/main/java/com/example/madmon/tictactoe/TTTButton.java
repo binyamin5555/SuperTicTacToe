@@ -34,12 +34,11 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
 
         doCtorStuff(1 , rowIndex , colIndex);
     }
-
-    public TTTButton(Context context , int numOfClicks , int rowIndex , int colIndex) {
+    public TTTButton(Context context , int numOfClicks , int colIndex , int rowIndex) {
         super(context);
+        this.givenContext = context;
 
         doCtorStuff(numOfClicks , rowIndex , colIndex);
-
     }
 
     //copy constructor
