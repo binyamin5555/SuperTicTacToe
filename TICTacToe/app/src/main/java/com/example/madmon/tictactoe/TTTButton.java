@@ -1,6 +1,7 @@
 package com.example.madmon.tictactoe;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -69,6 +70,7 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
         this.setBackgroundResource(android.R.drawable.btn_default);
 
         isMarked = false;
+
     }
 
     public void setWidthHeight(int w , int h) {

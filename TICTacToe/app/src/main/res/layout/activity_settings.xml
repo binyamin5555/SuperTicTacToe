@@ -13,41 +13,41 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <Spinner
                 android:id="@+id/spinnerBoardSize"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="1" />
 
             <Spinner
                 android:id="@+id/spinnerAllPlayers"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="1" />
 
             <Spinner
                 android:id="@+id/spinnerComputerPlayers"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="60dp" />
 
             <Spinner
                 android:id="@+id/spinnerSpecialButtons"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="60dp" />
 
             <Spinner
                 android:id="@+id/spinnerPressLimit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="60dp" />
 
 
         </LinearLayout>

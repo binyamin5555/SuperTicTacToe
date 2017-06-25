@@ -42,24 +42,15 @@
             android:textStyle="bold|italic" />
 
         <Button
-            android:id="@+id/b_NewGame"
+            android:id="@+id/b_MainMenu"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:layout_weight="0.05"
             android:onClick="GoActivity"
-            android:text="new game"
+            android:text="MAIN MENU"
             android:textSize="30sp"
             android:textStyle="italic" />
 
-        <Button
-            android:id="@+id/b_GameMenu"
-            android:layout_width="match_parent"
-            android:layout_height="67dp"
-            android:layout_weight="0.05"
-            android:onClick="GoActivity"
-            android:text="Game menu"
-            android:textSize="30sp"
-            android:textStyle="italic" />
 
         <Button
             android:id="@+id/b_Exit"

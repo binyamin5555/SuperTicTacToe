@@ -52,12 +52,12 @@ public class EndGame extends AppCompatActivity {
 
 
         switch(v.getId()) {
-            case R.id.b_NewGame:
-                if (MainMenuActivity.GameNode)
-                startActivity(new Intent(this , GameActivity.class));
-                else startActivity(new Intent(this , SinglePlayerActivity.class));
-                break;
-            case R.id.b_GameMenu:
+//            case R.id.b_NewGame:
+//                if (MainMenuActivity.GameNode)
+//                startActivity(new Intent(this , GameActivity.class));
+//                else startActivity(new Intent(this , SinglePlayerActivity.class));
+//                break;
+            case R.id.b_MainMenu:
                 startActivity(new Intent(this , MainMenuActivity.class));
                 break;
             case R.id.b_Exit:
