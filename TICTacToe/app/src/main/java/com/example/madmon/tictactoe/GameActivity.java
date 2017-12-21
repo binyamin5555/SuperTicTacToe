@@ -23,6 +23,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     protected int numOfCompPlayers;
     protected int chanceOfMagicButton;
     protected int magicButtonPressLimit;
+    protected boolean notWinner = false;
 
     protected TTTButton[][] buttons; //[num-of-row][num-of-col]
     GridLayout gl;
@@ -158,7 +159,17 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
 
-        return false;
+        //check is not winners
+        TTTButton[] allButtons = new TTTButton[gameDim*gameDim];
+        for (int i = 0; i < gameDim; i++)
+            for (int j = 0; j < gameDim; j++) {
+            if (!buttons[i][j].isMarked()) {
+                return false;
+            }
+        }
+
+        notWinner = true;
+        return true;
 
     }
 
@@ -200,15 +211,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             isGameOver = true;
         }
-
+       
         //dump all buttons
         GridLayout gl = (GridLayout) findViewById(R.id.gridLayout);
         gl.removeAllViews();
 
-        Toast.makeText(this, "Winner PlayerTurn " + currentPlayer.displayInButton + "!", Toast.LENGTH_LONG).show();
-
-        Intent in = new Intent(this, EndGame.class);
-        startActivity(in);
+        if (notWinner) {
+            Intent in = new Intent(this, EndGame.class);
+            startActivity(in);
+        }
+        else {
+            Toast.makeText(this, "Winner PlayerTurn " + currentPlayer.displayInButton + "!", Toast.LENGTH_LONG).show();
+            MusicPlayer.playRaw(this , R.raw.cheer);
+            Intent in = new Intent(this, EndGame.class);
+            startActivity(in);
+        }
     }
 
 

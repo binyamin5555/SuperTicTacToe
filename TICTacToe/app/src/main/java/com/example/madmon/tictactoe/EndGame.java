@@ -17,7 +17,7 @@ public class EndGame extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_game);
 
-        MusicPlayer.playRaw(this , R.raw.cheer);
+     //   MusicPlayer.playRaw(this , R.raw.cheer);
 
         Log.i("starting endgame" , "started");
 //        StackTraceElement[] elements = Thread.currentThread().getStackTrace();
@@ -55,13 +55,14 @@ public class EndGame extends AppCompatActivity {
 
 
         switch(v.getId()) {
-//            case R.id.b_NewGame:
+            case R.id.b_NewGame:
+                System.exit(1);
 //                if (MainMenuActivity.GameNode)
 //                startActivity(new Intent(this , GameActivity.class));
 //                else startActivity(new Intent(this , SinglePlayerActivity.class));
-//                break;
+                break;
             case R.id.b_MainMenu:
-                startActivity(new Intent(this , MainMenuActivity.class));
+               startActivity(new Intent(this , MainMenuActivity.class));
                 break;
             case R.id.b_Exit:
                 Log.i("navigating" , " goActivity - b_Exit");

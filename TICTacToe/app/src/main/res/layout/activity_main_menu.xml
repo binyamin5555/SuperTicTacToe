@@ -12,40 +12,48 @@
     tools:context="com.example.madmon.tictactoe.MainMenuActivity">
 
     <ImageView
-        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.07"
-        app:srcCompat="@mipmap/ic_tic_tac_toe"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true" />
+        android:id="@+id/listItemNoteImage"
+        android:src="@drawable/tic_tac_toe_power_point"
+        android:scaleType="fitXY"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:weightSum="1"
+    <LinearLayout android:orientation="vertical" android:layout_height="fill_parent" android:layout_width="fill_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
+        <LinearLayout android:layout_weight="1" android:layout_height="0dp" android:layout_width="fill_parent">
 
-        <Button
-            android:text="@string/settings_button_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/settingsB"
-            android:layout_weight="0.07"
-            android:onClick="moveToAnotherActivity"/>
+            <Button
+                android:id="@+id/startSingle"
+                android:layout_width="222dp"
+                android:layout_height="92dp"
+                android:layout_gravity="center"
+                android:layout_weight="0.54"
+                android:background="@drawable/backgrounds_for_buttons_menu"
+                android:onClick="moveToAnotherActivity"
+                android:text="@string/start_single_button_text" />
+        </LinearLayout>
 
+        <LinearLayout android:layout_weight="1" android:layout_height="0dp" android:layout_width="fill_parent"/>
+        <LinearLayout android:layout_weight="1" android:layout_height="0dp" android:layout_width="fill_parent">
 
-        <Button
-            android:id="@+id/startSingle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.07"
-            android:background="@mipmap/ic_launcher"
-            android:onClick="moveToAnotherActivity"
-            android:text="@string/start_single_button_text" />
+            <Button
+                android:id="@+id/settingsB"
+                android:layout_width="222dp"
+                android:layout_height="92dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/backgrounds_for_buttons_menu"
+                android:onClick="moveToAnotherActivity"
+                android:text="@string/settings_button_text" />
+        </LinearLayout>
 
     </LinearLayout>
+
+
+
 </RelativeLayout>

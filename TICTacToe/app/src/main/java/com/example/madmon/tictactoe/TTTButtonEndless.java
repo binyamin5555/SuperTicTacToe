@@ -1,7 +1,7 @@
 package com.example.madmon.tictactoe;
 
-import android.content.Context;
-import android.graphics.drawable.Drawable;
+        import android.content.Context;
+        import android.graphics.drawable.Drawable;
 
 /**
  * Created by user on 22/01/2017.
@@ -18,7 +18,7 @@ public class TTTButtonEndless extends TTTButton {
     public void pressButton(PlayerTurn playerTurn) {
         super.pressButton(playerTurn);
 
-            numOfClicks = -1;
+        numOfClicks = -1;
 
 //        setEnabled(true);
     }

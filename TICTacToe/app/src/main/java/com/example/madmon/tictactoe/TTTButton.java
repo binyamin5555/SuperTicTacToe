@@ -18,7 +18,7 @@ public class TTTButton extends android.support.v7.widget.AppCompatButton {
 
     public int rowIndex , colIndex;
 
-    public static int textSize = 50;
+    public static int textSize = 40;
     public int numOfClicks;
     protected PlayerTurn owner;
 
