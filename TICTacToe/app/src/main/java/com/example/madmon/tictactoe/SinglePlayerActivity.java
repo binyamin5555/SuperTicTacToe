@@ -255,7 +255,7 @@ public class SinglePlayerActivity extends GameActivity {
     }
 
 
-    public int getButtonDirections(TTTButton checkMyStatus) {
+        public int getButtonDirections(TTTButton checkMyStatus) {
 
         //TODO - finish using this,
         //utilize "isArrayClearForCurrentPlayer"

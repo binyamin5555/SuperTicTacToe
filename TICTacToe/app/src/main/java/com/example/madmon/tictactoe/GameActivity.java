@@ -211,7 +211,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             isGameOver = true;
         }
-       
+
         //dump all buttons
         GridLayout gl = (GridLayout) findViewById(R.id.gridLayout);
         gl.removeAllViews();

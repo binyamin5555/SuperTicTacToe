@@ -45,6 +45,7 @@ public class MainMenuActivity extends AppCompatActivity {
                 break;
             case R.id.startSingle:
                 startActivity(new Intent(this , SinglePlayerActivity.class));
+                System.exit(1);
                 break;
 //            case R.id.startMulti:
 //                GameNode=true;
